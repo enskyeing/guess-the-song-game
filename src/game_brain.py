@@ -138,7 +138,7 @@ class GTSGame:
 
         # Format data in Song class
         self.song = Song(
-            title=random_song["title"],
+            title=random_song["title"].replace("\u200b", ""),
             lyrics=lyrics,
             cover=random_song['song_art_image_url'],
             genius_link=random_song['url'],
