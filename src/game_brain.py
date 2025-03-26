@@ -12,12 +12,19 @@ class GTSGame:
         self.artist = None
         self.song = None
         self.lyric = ""
-        self.round = 0
 
         self.game_ongoing = True
         self.user_guessing = True
         self.timer_incomplete = True
         self.time_count = 0
+
+        # game stats
+        self.round: int = 0
+        self.guess_times: list = []
+        self.fastest_guess: tuple[str, float] = ("None correct", 60.0) # (song name, time)
+        self.artists_played: set = set()
+        self.correct_guesses: int = 0
+        
 
         self.welcome()
         self.start()
@@ -55,6 +62,7 @@ class GTSGame:
         while self.game_ongoing:
             self.round += 1
             self.user_guessing = True
+            guess_time_start = time.time()
             self.choose_artist()
             self.choose_song()
             print(f"Round {self.round} starting in...")
@@ -73,6 +81,15 @@ class GTSGame:
                 if guess == self.song.title.lower():
                     print(f"You guessed correctly!\nThe song was {self.song.title} by {self.artist.name}.")
                     self.user_guessing = False
+
+                    # stats
+                    guess_time_end = time.time()
+                    guess_time: float = round(guess_time_end - guess_time_start, 2)
+                    if guess_time < self.fastest_guess[1]:
+                        self.fastest_guess = (self.song.title, guess_time)
+                    self.guess_times.append(guess_time)
+                    self.correct_guesses += 1
+
                     time.sleep(1)  # wait for timer to reset
                 elif guess == "q" or guess == "quit":
                     self.quit()
@@ -112,7 +129,21 @@ class GTSGame:
                 break
 
     def end(self):
-        print(f"You played {self.round} round(s).\nThanks for playing Guess the Song!")
+        print(r"""
+   ____      _      __  __  U _____ u      ____     _____      _       _____   ____     
+U /"___|uU  /"\  uU|' \/ '|u\| ___"|/     / __"| u |_ " _| U  /"\  u  |_ " _| / __"| u  
+\| |  _ / \/ _ \/ \| |\/| |/ |  _|"      <\___ \/    | |    \/ _ \/     | |  <\___ \/   
+ | |_| |  / ___ \  | |  | |  | |___       u___) |   /| |\   / ___ \    /| |\  u___) |   
+  \____| /_/   \_\ |_|  |_|  |_____|      |____/>> u |_|U  /_/   \_\  u |_|U  |____/>>  
+  _)(|_   \\    >><<,-,,-.   <<   >>       )(  (__)_// \\_  \\    >>  _// \\_  )(  (__) 
+ (__)__) (__)  (__)(./  \.) (__) (__)     (__)    (__) (__)(__)  (__)(__) (__)(__)      
+""")
+        print(rf"""𝐑𝐨𝐮𝐧𝐝𝐬 𝐩𝐥𝐚𝐲𝐞𝐝: {self.round}""")
+        print(rf"""𝐂𝐨𝐫𝐫𝐞𝐜𝐭 𝐠𝐮𝐞𝐬𝐬𝐞𝐬: {self.correct_guesses}""")
+        print(rf"""𝐀𝐯𝐞𝐫𝐚𝐠𝐞 𝐠𝐮𝐞𝐬𝐬 𝐭𝐢𝐦𝐞: {round(sum(self.guess_times)/len(self.guess_times), 2)} seconds""")
+        print(rf"""𝐀𝐫𝐭𝐢𝐬𝐭𝐬 𝐩𝐥𝐚𝐲𝐞𝐝: {", ".join(self.artists_played)}""")
+        print(rf"""𝐅𝐚𝐬𝐭𝐞𝐬𝐭 𝐠𝐮𝐞𝐬𝐬: {self.fastest_guess[0]} in {self.fastest_guess[1]} seconds""")
+        print(f"Thanks for playing Guess the Song!")
 
     def choose_artist(self):
         """Uses LyricGenius to get artist information and songs."""
@@ -130,6 +161,8 @@ class GTSGame:
             genius_link=artist_info['url']
         )
         print(f"{self.artist.name} found!")
+
+        self.artists_played.add(self.artist.name)
 
     def choose_song(self):
         print("Choosing lyric...")
