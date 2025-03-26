@@ -181,7 +181,7 @@ U /"___|uU  /"\  uU|' \/ '|u\| ___"|/     / __"| u |_ " _| U  /"\  u  |_ " _| / 
         # Create Artist class with all the information of the selected artist
         self.artist = Artist(
             name=artist_info['name'],
-            genius_id=artist_info['id'],
+            id=artist_info['id'],
             songs=artist_songs,
             image=artist_info['image_url'],
             genius_link=artist_info['url']
@@ -201,7 +201,7 @@ U /"___|uU  /"\  uU|' \/ '|u\| ___"|/     / __"| u |_ " _| U  /"\  u  |_ " _| / 
             lyrics=lyrics,
             cover=random_song['song_art_image_url'],
             genius_link=random_song['url'],
-            genius_id=random_song['id']
+            id=random_song['id']
         )
 
     def choose_lyric(self):
