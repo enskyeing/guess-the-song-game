@@ -147,6 +147,8 @@ class GTSGame:
         )
         print(f"{self.artist.name} found!")
 
+        self.artists_played.add(self.artist.name)
+
     def choose_song(self):
         print("Choosing lyric...")
         random_song = random.choice(self.artist.songs)
