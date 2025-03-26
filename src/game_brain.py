@@ -28,6 +28,7 @@ class GTSGame:
         
 
         self.welcome()
+        self.choose_artist()
         self.start()
 
     def start_timer(self) -> None:
@@ -64,15 +65,14 @@ class GTSGame:
             f"Welcome to Guess the Song; the game where you need to guess which song the lyric belongs to within "
             f"{self.time_limit} seconds!")
         print(gts_caps_ascii + "\n" + welcome_text)
+    
 
     def start(self):
         """Starts the game."""
         while self.game_ongoing:
             self.round += 1
             self.user_guessing = True
-            guess_time_start = time.time()
 
-            self.choose_artist()
             self.choose_song()
 
             print(f"Round {self.round} starting in...")
@@ -125,6 +125,15 @@ class GTSGame:
             if play_again == "y":
                 valid_answer = True
                 self.game_ongoing = True
+                same_artist = input("Would you like play as the same artist? (y/n) ")
+                while True:
+                    if same_artist == "y":
+                        break
+                    elif same_artist == "n":
+                        self.choose_artist()
+                    else:
+                        print("That's not a valid answer.")
+                        continue
             elif play_again == "n" or play_again == "q" or play_again == "quit":
                 valid_answer = True
                 self.game_ongoing = False
