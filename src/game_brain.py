@@ -22,7 +22,7 @@ class GTSGame:
         # game stats
         self.round: int = 0
         self.guess_times: list = []
-        self.fastest_guess: tuple[str, str, float] = ("None correct", "No song", 60.0) # (song name, time)
+        self.fastest_guess: tuple[str, str, float] = ("None correct", "No artist", 60.0) # (song name, artist name, time)
         self.artists_played: set = set()
         self.correct_guesses: int = 0
         
@@ -106,8 +106,8 @@ class GTSGame:
 
             # stats
             self.guess_times.append(self.guess_time_count)
-            if self.guess_time_count < self.fastest_guess[1]:
-                self.fastest_guess = (self.song.title, self.guess_time_count)
+            if self.guess_time_count < self.fastest_guess[2]:
+                self.fastest_guess = (self.song.title, self.artist.name, self.guess_time_count)
             self.correct_guesses += 1
 
             time.sleep(1)  # wait for timer to reset
@@ -131,6 +131,7 @@ class GTSGame:
                         break
                     elif same_artist == "n":
                         self.choose_artist()
+                        break
                     else:
                         print("That's not a valid answer.")
                         continue
@@ -167,7 +168,7 @@ U /"___|uU  /"\  uU|' \/ '|u\| ___"|/     / __"| u |_ " _| U  /"\  u  |_ " _| / 
         print(rf"""𝐂𝐨𝐫𝐫𝐞𝐜𝐭 𝐠𝐮𝐞𝐬𝐬𝐞𝐬: {self.correct_guesses}""")
         print(rf"""𝐀𝐯𝐞𝐫𝐚𝐠𝐞 𝐠𝐮𝐞𝐬𝐬 𝐭𝐢𝐦𝐞: {round(sum(self.guess_times)/len(self.guess_times), 2)} seconds""")
         print(rf"""𝐀𝐫𝐭𝐢𝐬𝐭𝐬 𝐩𝐥𝐚𝐲𝐞𝐝: {", ".join(self.artists_played)}""")
-        print(rf"""𝐅𝐚𝐬𝐭𝐞𝐬𝐭 𝐠𝐮𝐞𝐬𝐬: {self.fastest_guess[0]} in {self.fastest_guess[1]} seconds""")
+        print(rf"""𝐅𝐚𝐬𝐭𝐞𝐬𝐭 𝐠𝐮𝐞𝐬𝐬: {self.fastest_guess[0]} by {self.fastest_guess[1]} in {self.fastest_guess[2]} seconds""")
         print(f"Thanks for playing Guess the Song!")
 
     def choose_artist(self):
