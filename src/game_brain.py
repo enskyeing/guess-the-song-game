@@ -129,7 +129,21 @@ class GTSGame:
                 break
 
     def end(self):
-        print(f"You played {self.round} round(s).\nThanks for playing Guess the Song!")
+        print(r"""
+   ____      _      __  __  U _____ u      ____     _____      _       _____   ____     
+U /"___|uU  /"\  uU|' \/ '|u\| ___"|/     / __"| u |_ " _| U  /"\  u  |_ " _| / __"| u  
+\| |  _ / \/ _ \/ \| |\/| |/ |  _|"      <\___ \/    | |    \/ _ \/     | |  <\___ \/   
+ | |_| |  / ___ \  | |  | |  | |___       u___) |   /| |\   / ___ \    /| |\  u___) |   
+  \____| /_/   \_\ |_|  |_|  |_____|      |____/>> u |_|U  /_/   \_\  u |_|U  |____/>>  
+  _)(|_   \\    >><<,-,,-.   <<   >>       )(  (__)_// \\_  \\    >>  _// \\_  )(  (__) 
+ (__)__) (__)  (__)(./  \.) (__) (__)     (__)    (__) (__)(__)  (__)(__) (__)(__)      
+""")
+        print(rf"""𝐑𝐨𝐮𝐧𝐝𝐬 𝐩𝐥𝐚𝐲𝐞𝐝: {self.round}""")
+        print(rf"""𝐂𝐨𝐫𝐫𝐞𝐜𝐭 𝐠𝐮𝐞𝐬𝐬𝐞𝐬: {self.correct_guesses}""")
+        print(rf"""𝐀𝐯𝐞𝐫𝐚𝐠𝐞 𝐠𝐮𝐞𝐬𝐬 𝐭𝐢𝐦𝐞: {sum(self.guess_times)/len(self.guess_times)} seconds""")
+        print(rf"""𝐀𝐫𝐭𝐢𝐬𝐭𝐬 𝐩𝐥𝐚𝐲𝐞𝐝: {", ".join(self.artists_played)}""")
+        print(rf"""𝐅𝐚𝐬𝐭𝐞𝐬𝐭 𝐠𝐮𝐞𝐬𝐬: {self.fastest_guess[0]} in {self.fastest_guess[1]} seconds""")
+        print(f"Thanks for playing Guess the Song!")
 
     def choose_artist(self):
         """Uses LyricGenius to get artist information and songs."""
