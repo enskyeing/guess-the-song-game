@@ -88,6 +88,7 @@ class GTSGame:
                     if guess_time < self.fastest_guess[1]:
                         self.fastest_guess = (self.song.title, guess_time)
                     self.guess_times.append(guess_time)
+                    self.correct_guesses += 1
 
                     time.sleep(1)  # wait for timer to reset
                 elif guess == "q" or guess == "quit":
