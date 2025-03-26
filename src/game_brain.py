@@ -12,12 +12,19 @@ class GTSGame:
         self.artist = None
         self.song = None
         self.lyric = ""
-        self.round = 0
 
         self.game_ongoing = True
         self.user_guessing = True
         self.timer_incomplete = True
         self.time_count = 0
+
+        # game stats
+        self.round: int = 0
+        self.guess_times: list = []
+        self.fastest_guess: tuple # (song name, time)
+        self.artists_played: set = ()
+        self.correct_guesses: int = 0
+        
 
         self.welcome()
         self.start()
