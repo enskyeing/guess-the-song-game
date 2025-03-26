@@ -21,7 +21,7 @@ class GTSGame:
         # game stats
         self.round: int = 0
         self.guess_times: list = []
-        self.fastest_guess: tuple[str, int] # (song name, time)
+        self.fastest_guess: tuple[str, float] = ("None correct", 60.0) # (song name, time)
         self.artists_played: set = set()
         self.correct_guesses: int = 0
         
