@@ -17,11 +17,12 @@ class GTSGame:
         self.user_guessing = True
         self.timer_incomplete = True
         self.time_count = 0
+        self.guess_time_count = 0
 
         # game stats
         self.round: int = 0
         self.guess_times: list = []
-        self.fastest_guess: tuple[str, float] = ("None correct", 60.0) # (song name, time)
+        self.fastest_guess: tuple[str, str, float] = ("None correct", "No song", 60.0) # (song name, time)
         self.artists_played: set = set()
         self.correct_guesses: int = 0
         
@@ -41,6 +42,13 @@ class GTSGame:
             elif self.user_guessing is False:
                 self.time_count = 0
                 break
+    
+    def start_guess_timer(self) -> None:
+        """Time how long it takes for the player to guess the correct answer."""
+        self.guess_time_count = 0
+        while self.user_guessing:
+            time.sleep(1)
+            self.guess_time_count += 1
 
     def welcome(self):
         """Sends heading and game instructions."""
@@ -63,43 +71,51 @@ class GTSGame:
             self.round += 1
             self.user_guessing = True
             guess_time_start = time.time()
+
             self.choose_artist()
             self.choose_song()
+
             print(f"Round {self.round} starting in...")
             for i in range(3, 0, -1):
                 print(i)
                 time.sleep(1)
+            
             print("-------------------------------------")
             print(f"Artist: {self.artist.name}")
             print(f"Lyric: {self.choose_lyric()}")
             print("-------------------------------------")
             print(f"You have {self.time_limit} seconds, GO!")
+
             time_thread = threading.Thread(target=self.start_timer)
             time_thread.start()
+
+            threading.Thread(target=self.start_guess_timer).start()
+
             while self.time_count > 0:
-                guess = input("Guess: ").lower()
-                if guess == self.song.title.lower():
-                    print(f"You guessed correctly!\nThe song was {self.song.title} by {self.artist.name}.")
-                    self.user_guessing = False
+                self.game_loop()
 
-                    # stats
-                    guess_time_end = time.time()
-                    guess_time: float = round(guess_time_end - guess_time_start, 2)
-                    if guess_time < self.fastest_guess[1]:
-                        self.fastest_guess = (self.song.title, guess_time)
-                    self.guess_times.append(guess_time)
-                    self.correct_guesses += 1
-
-                    time.sleep(1)  # wait for timer to reset
-                elif guess == "q" or guess == "quit":
-                    self.quit()
-                    self.user_guessing = False
-                    self.game_ongoing = False
-                    break
-                else:
-                    continue
             if self.game_ongoing:
                 self.replay()
+
+    def game_loop(self):
+        """Controls game loop"""
+        guess = input("Guess: ").lower()
+        if guess == self.song.title.lower():
+            print(f"You guessed correctly!\nThe song was {self.song.title} by {self.artist.name}.")
+            self.user_guessing = False
+
+            # stats
+            self.guess_times.append(self.guess_time_count)
+            if self.guess_time_count < self.fastest_guess[1]:
+                self.fastest_guess = (self.song.title, self.guess_time_count)
+            self.correct_guesses += 1
+
+            time.sleep(1)  # wait for timer to reset
+
+        elif guess == "q" or guess == "quit":
+            self.quit()
+            self.user_guessing = False
+            self.game_ongoing = False
 
     def replay(self):
         """Checks if player wants to play again."""
