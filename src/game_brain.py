@@ -21,7 +21,7 @@ class GTSGame:
         # game stats
         self.round: int = 0
         self.guess_times: list = []
-        self.fastest_guess: tuple # (song name, time)
+        self.fastest_guess: tuple[str, int] # (song name, time)
         self.artists_played: set = ()
         self.correct_guesses: int = 0
         
@@ -62,6 +62,7 @@ class GTSGame:
         while self.game_ongoing:
             self.round += 1
             self.user_guessing = True
+            guess_time_start = time.time()
             self.choose_artist()
             self.choose_song()
             print(f"Round {self.round} starting in...")
@@ -80,6 +81,14 @@ class GTSGame:
                 if guess == self.song.title.lower():
                     print(f"You guessed correctly!\nThe song was {self.song.title} by {self.artist.name}.")
                     self.user_guessing = False
+
+                    # stats
+                    guess_time_end = time.time()
+                    guess_time: float = round(guess_time_end - guess_time_start, 2)
+                    if guess_time < self.fastest_guess[1]:
+                        self.fastest_guess = (self.song.title, guess_time)
+                    self.guess_times.append(guess_time)
+
                     time.sleep(1)  # wait for timer to reset
                 elif guess == "q" or guess == "quit":
                     self.quit()
