@@ -140,7 +140,7 @@ U /"___|uU  /"\  uU|' \/ '|u\| ___"|/     / __"| u |_ " _| U  /"\  u  |_ " _| / 
 """)
         print(rf"""𝐑𝐨𝐮𝐧𝐝𝐬 𝐩𝐥𝐚𝐲𝐞𝐝: {self.round}""")
         print(rf"""𝐂𝐨𝐫𝐫𝐞𝐜𝐭 𝐠𝐮𝐞𝐬𝐬𝐞𝐬: {self.correct_guesses}""")
-        print(rf"""𝐀𝐯𝐞𝐫𝐚𝐠𝐞 𝐠𝐮𝐞𝐬𝐬 𝐭𝐢𝐦𝐞: {sum(self.guess_times)/len(self.guess_times)} seconds""")
+        print(rf"""𝐀𝐯𝐞𝐫𝐚𝐠𝐞 𝐠𝐮𝐞𝐬𝐬 𝐭𝐢𝐦𝐞: {round(sum(self.guess_times)/len(self.guess_times), 2)} seconds""")
         print(rf"""𝐀𝐫𝐭𝐢𝐬𝐭𝐬 𝐩𝐥𝐚𝐲𝐞𝐝: {", ".join(self.artists_played)}""")
         print(rf"""𝐅𝐚𝐬𝐭𝐞𝐬𝐭 𝐠𝐮𝐞𝐬𝐬: {self.fastest_guess[0]} in {self.fastest_guess[1]} seconds""")
         print(f"Thanks for playing Guess the Song!")
