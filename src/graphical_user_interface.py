@@ -8,7 +8,13 @@ from tkinter import ttk
 class UserInterface(ctk.CTk):
     def __init__(self) -> None:
         super().__init__()
-        pass
+
+        # App Config
+        self.title = "Guess the Song"
+        self.geometry("900x550")
+
+        # Page
+        self.home_page()
 
     def home_page(self):
         pass
@@ -28,5 +34,9 @@ class UserInterface(ctk.CTk):
     def mp_loading_page(self):
         pass
 
+    def _remove_all_children(self):
+        pass
+
 if __name__ == "__main__":
-    UserInterface()
+    app = UserInterface()
+    app.mainloop()
