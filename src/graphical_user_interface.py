@@ -3,6 +3,7 @@ import customtkinter as ctk
 from tkinter import ttk
 
 # ======= UI STYLE CONSTANTS ========
+bg = tk.PhotoImage(file="assets/music-bg.png")
 
 
 class UserInterface(ctk.CTk):
