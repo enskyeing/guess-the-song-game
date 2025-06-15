@@ -14,6 +14,7 @@ class UserInterface(ctk.CTk):
         # App Config
         self.title = "Guess the Song"
         self.geometry("900x550")
+        ctk.set_default_color_theme("src/theme.json")
 
         # Page
         self.home_page()
@@ -33,11 +34,6 @@ class UserInterface(ctk.CTk):
             self, 
             text="SINGLEPLAYER", 
             font=DEFAULT_FONT,
-            text_color="#000000",
-            fg_color="#6CD4FF",
-            hover_color="#7CAAFC",
-            border_color="#7CAAFC",
-            border_width=1,
             width=200,
             height=50
             )
