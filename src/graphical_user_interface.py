@@ -44,7 +44,7 @@ class UserInterface(ctk.CTk):
             font=TITLE_FONT,
             text_color="black"
         )
-        self.canvas_bg.create_text(450, 250, text="GUESS THE\nSONG", font=TITLE_FONT, anchor="center", justify="center", fill="#FFA400")
+        self.canvas_bg.create_text(450, 250, text="GUESS THE\nSONG", font=TITLE_FONT, anchor="center", justify="center", fill="#09BC8A")
 
         # Buttons
         sp_btn = ctk.CTkButton(
